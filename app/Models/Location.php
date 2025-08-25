@@ -14,6 +14,11 @@ class Location extends Model
         'latitude',
         'longitude',
         'stato',
+        'orari_apertura',
+        'prezzo_biglietto',
+        'sito_web',
+        'telefono',
+        'note_visitatori',
     ];
 
     protected $casts = [
