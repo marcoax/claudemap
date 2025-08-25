@@ -1,36 +1,29 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
-import AppLayout from '@/layouts/app-layout';
-import { dashboard } from '@/routes';
-import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard().url,
-    },
-];
+import { Head, Link } from '@inertiajs/react';
 
 export default function Dashboard() {
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-950">
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+            
+            <div className="max-w-4xl mx-auto px-4 py-8">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8">
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                        Dashboard
+                    </h1>
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                        Welcome to your dashboard! The interactive map has been moved to the welcome page.
+                    </p>
+                    <Link
+                        href="/"
+                        className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                    >
+                        View Map
+                        <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </Link>
                 </div>
             </div>
-        </AppLayout>
+        </div>
     );
 }
