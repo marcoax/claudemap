@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\LocationController::search
-* @see app/Http/Controllers/LocationController.php:54
+* @see app/Http/Controllers/LocationController.php:64
 * @route '/api/locations/search'
 */
 export const search = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ search.definition = {
 
 /**
 * @see \App\Http\Controllers\LocationController::search
-* @see app/Http/Controllers/LocationController.php:54
+* @see app/Http/Controllers/LocationController.php:64
 * @route '/api/locations/search'
 */
 search.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ search.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\LocationController::search
-* @see app/Http/Controllers/LocationController.php:54
+* @see app/Http/Controllers/LocationController.php:64
 * @route '/api/locations/search'
 */
 search.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ search.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\LocationController::search
-* @see app/Http/Controllers/LocationController.php:54
+* @see app/Http/Controllers/LocationController.php:64
 * @route '/api/locations/search'
 */
 search.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ search.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\LocationController::search
-* @see app/Http/Controllers/LocationController.php:54
+* @see app/Http/Controllers/LocationController.php:64
 * @route '/api/locations/search'
 */
 const searchForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const searchForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\LocationController::search
-* @see app/Http/Controllers/LocationController.php:54
+* @see app/Http/Controllers/LocationController.php:64
 * @route '/api/locations/search'
 */
 searchForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ searchForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\LocationController::search
-* @see app/Http/Controllers/LocationController.php:54
+* @see app/Http/Controllers/LocationController.php:64
 * @route '/api/locations/search'
 */
 searchForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ search.form = searchForm
 
 /**
 * @see \App\Http\Controllers\LocationController::show
-* @see app/Http/Controllers/LocationController.php:86
+* @see app/Http/Controllers/LocationController.php:109
 * @route '/api/locations/{location}'
 */
 export const show = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\LocationController::show
-* @see app/Http/Controllers/LocationController.php:86
+* @see app/Http/Controllers/LocationController.php:109
 * @route '/api/locations/{location}'
 */
 show.url = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -130,7 +130,7 @@ show.url = (args: { location: number | { id: number } } | [location: number | { 
 
 /**
 * @see \App\Http\Controllers\LocationController::show
-* @see app/Http/Controllers/LocationController.php:86
+* @see app/Http/Controllers/LocationController.php:109
 * @route '/api/locations/{location}'
 */
 show.get = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -140,7 +140,7 @@ show.get = (args: { location: number | { id: number } } | [location: number | { 
 
 /**
 * @see \App\Http\Controllers\LocationController::show
-* @see app/Http/Controllers/LocationController.php:86
+* @see app/Http/Controllers/LocationController.php:109
 * @route '/api/locations/{location}'
 */
 show.head = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -150,7 +150,7 @@ show.head = (args: { location: number | { id: number } } | [location: number | {
 
 /**
 * @see \App\Http\Controllers\LocationController::show
-* @see app/Http/Controllers/LocationController.php:86
+* @see app/Http/Controllers/LocationController.php:109
 * @route '/api/locations/{location}'
 */
 const showForm = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -160,7 +160,7 @@ const showForm = (args: { location: number | { id: number } } | [location: numbe
 
 /**
 * @see \App\Http\Controllers\LocationController::show
-* @see app/Http/Controllers/LocationController.php:86
+* @see app/Http/Controllers/LocationController.php:109
 * @route '/api/locations/{location}'
 */
 showForm.get = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -170,7 +170,7 @@ showForm.get = (args: { location: number | { id: number } } | [location: number 
 
 /**
 * @see \App\Http\Controllers\LocationController::show
-* @see app/Http/Controllers/LocationController.php:86
+* @see app/Http/Controllers/LocationController.php:109
 * @route '/api/locations/{location}'
 */
 showForm.head = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -187,7 +187,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\LocationController::details
-* @see app/Http/Controllers/LocationController.php:91
+* @see app/Http/Controllers/LocationController.php:114
 * @route '/api/locations/{location}/details'
 */
 export const details = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -202,7 +202,7 @@ details.definition = {
 
 /**
 * @see \App\Http\Controllers\LocationController::details
-* @see app/Http/Controllers/LocationController.php:91
+* @see app/Http/Controllers/LocationController.php:114
 * @route '/api/locations/{location}/details'
 */
 details.url = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -235,7 +235,7 @@ details.url = (args: { location: number | { id: number } } | [location: number |
 
 /**
 * @see \App\Http\Controllers\LocationController::details
-* @see app/Http/Controllers/LocationController.php:91
+* @see app/Http/Controllers/LocationController.php:114
 * @route '/api/locations/{location}/details'
 */
 details.get = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -245,7 +245,7 @@ details.get = (args: { location: number | { id: number } } | [location: number |
 
 /**
 * @see \App\Http\Controllers\LocationController::details
-* @see app/Http/Controllers/LocationController.php:91
+* @see app/Http/Controllers/LocationController.php:114
 * @route '/api/locations/{location}/details'
 */
 details.head = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -255,7 +255,7 @@ details.head = (args: { location: number | { id: number } } | [location: number 
 
 /**
 * @see \App\Http\Controllers\LocationController::details
-* @see app/Http/Controllers/LocationController.php:91
+* @see app/Http/Controllers/LocationController.php:114
 * @route '/api/locations/{location}/details'
 */
 const detailsForm = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -265,7 +265,7 @@ const detailsForm = (args: { location: number | { id: number } } | [location: nu
 
 /**
 * @see \App\Http\Controllers\LocationController::details
-* @see app/Http/Controllers/LocationController.php:91
+* @see app/Http/Controllers/LocationController.php:114
 * @route '/api/locations/{location}/details'
 */
 detailsForm.get = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -275,7 +275,7 @@ detailsForm.get = (args: { location: number | { id: number } } | [location: numb
 
 /**
 * @see \App\Http\Controllers\LocationController::details
-* @see app/Http/Controllers/LocationController.php:91
+* @see app/Http/Controllers/LocationController.php:114
 * @route '/api/locations/{location}/details'
 */
 detailsForm.head = (args: { location: number | { id: number } } | [location: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
