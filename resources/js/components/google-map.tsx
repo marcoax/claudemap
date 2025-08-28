@@ -1,14 +1,7 @@
 import { Loader } from '@googlemaps/js-api-loader';
 import { useEffect, useRef, useState } from 'react';
 
-interface Location {
-    id: number;
-    titolo: string;
-    indirizzo: string;
-    latitude: number;
-    longitude: number;
-    stato: 'attivo' | 'disattivo' | 'in_allarme';
-}
+import { type Location } from '@/types/location';
 
 interface GoogleMapProps {
     locations: Location[];
@@ -108,7 +101,7 @@ export default function GoogleMap({
         markersRef.current.forEach(marker => marker.map = null);
         markersRef.current = [];
 
-         
+
         const { AdvancedMarkerElement, PinElement } = google.maps.marker;
 
         locations.forEach(location => {
@@ -128,7 +121,7 @@ export default function GoogleMap({
 
             marker.addListener('click', async () => {
                 onLocationSelect(location);
-                
+
                 if (infoWindowRef.current) {
                     // Show loading content first
                     const loadingContent = `
@@ -139,9 +132,9 @@ export default function GoogleMap({
                                 <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
                                 <span class="text-sm text-gray-600">Caricamento...</span>
                             </div>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" 
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                                   style="background-color: ${getMarkerColor(location.stato)}20; color: ${getMarkerColor(location.stato)};">
-                                ${location.stato === 'attivo' ? 'Attivo' : 
+                                ${location.stato === 'attivo' ? 'Attivo' :
                                   location.stato === 'disattivo' ? 'Disattivo' : 'In Allarme'}
                             </span>
                         </div>
@@ -155,46 +148,46 @@ export default function GoogleMap({
                         const response = await fetch(`/api/locations/${location.id}/details`);
                         if (response.ok) {
                             const locationDetails = await response.json();
-                            
+
                             const contentWithDescription = `
                                 <div class="p-4 max-w-sm">
                                     <h3 class="font-semibold text-lg mb-2">${location.titolo}</h3>
                                     <p class="text-sm text-gray-600 mb-2">${location.indirizzo}</p>
                                     <p class="text-sm text-gray-700 mb-3">${locationDetails.descrizione || 'Nessuna descrizione disponibile.'}</p>
-                                    
+
                                     ${locationDetails.orari_apertura ? `
                                     <div class="mb-2">
                                         <strong class="text-xs text-gray-800">🕐 Orari:</strong>
                                         <p class="text-xs text-gray-600">${locationDetails.orari_apertura}</p>
                                     </div>` : ''}
-                                    
+
                                     ${locationDetails.prezzo_biglietto ? `
                                     <div class="mb-2">
                                         <strong class="text-xs text-gray-800">💰 Prezzi:</strong>
                                         <p class="text-xs text-gray-600">${locationDetails.prezzo_biglietto}</p>
                                     </div>` : ''}
-                                    
+
                                     ${locationDetails.telefono ? `
                                     <div class="mb-2">
                                         <strong class="text-xs text-gray-800">📞 Telefono:</strong>
                                         <p class="text-xs text-gray-600">${locationDetails.telefono}</p>
                                     </div>` : ''}
-                                    
+
                                     ${locationDetails.sito_web ? `
                                     <div class="mb-2">
                                         <strong class="text-xs text-gray-800">🌐 Sito web:</strong>
                                         <a href="${locationDetails.sito_web}" target="_blank" class="text-xs text-blue-600 hover:underline">${locationDetails.sito_web}</a>
                                     </div>` : ''}
-                                    
+
                                     ${locationDetails.note_visitatori ? `
                                     <div class="mb-3">
                                         <strong class="text-xs text-gray-800">ℹ️ Note per i visitatori:</strong>
                                         <p class="text-xs text-gray-600">${locationDetails.note_visitatori}</p>
                                     </div>` : ''}
-                                    
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" 
+
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                                           style="background-color: ${getMarkerColor(location.stato)}20; color: ${getMarkerColor(location.stato)};">
-                                        ${location.stato === 'attivo' ? 'Attivo' : 
+                                        ${location.stato === 'attivo' ? 'Attivo' :
                                           location.stato === 'disattivo' ? 'Disattivo' : 'In Allarme'}
                                     </span>
                                 </div>
@@ -204,16 +197,16 @@ export default function GoogleMap({
                         }
                     } catch (error) {
                         console.error('Error fetching location details:', error);
-                        
+
                         // Show error message
                         const errorContent = `
                             <div class="p-3">
                                 <h3 class="font-semibold text-lg mb-2">${location.titolo}</h3>
                                 <p class="text-sm text-gray-600 mb-2">${location.indirizzo}</p>
                                 <p class="text-sm text-red-600 mb-3">Errore nel caricamento della descrizione.</p>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" 
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                                       style="background-color: ${getMarkerColor(location.stato)}20; color: ${getMarkerColor(location.stato)};">
-                                    ${location.stato === 'attivo' ? 'Attivo' : 
+                                    ${location.stato === 'attivo' ? 'Attivo' :
                                       location.stato === 'disattivo' ? 'Disattivo' : 'In Allarme'}
                                 </span>
                             </div>
@@ -232,10 +225,10 @@ export default function GoogleMap({
             locations.forEach(location => {
                 bounds.extend({ lat: Number(location.latitude), lng: Number(location.longitude) });
             });
-            
+
             // Fit bounds with padding for better visibility
             mapInstanceRef.current.fitBounds(bounds, { padding: 50 });
-            
+
             // Ensure minimum zoom level for single locations
             if (locations.length === 1) {
                 setTimeout(() => {
@@ -258,7 +251,7 @@ export default function GoogleMap({
         mapInstanceRef.current.setCenter(position);
         mapInstanceRef.current.setZoom(15);
 
-        const marker = markersRef.current.find((marker, index) => 
+        const marker = markersRef.current.find((marker, index) =>
             locations[index]?.id === selectedLocation.id
         );
 
@@ -273,9 +266,9 @@ export default function GoogleMap({
                             <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
                             <span class="text-sm text-gray-600">Caricamento...</span>
                         </div>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" 
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                               style="background-color: ${getMarkerColor(selectedLocation.stato)}20; color: ${getMarkerColor(selectedLocation.stato)};">
-                            ${selectedLocation.stato === 'attivo' ? 'Attivo' : 
+                            ${selectedLocation.stato === 'attivo' ? 'Attivo' :
                               selectedLocation.stato === 'disattivo' ? 'Disattivo' : 'In Allarme'}
                         </span>
                     </div>
@@ -289,46 +282,46 @@ export default function GoogleMap({
                     const response = await fetch(`/api/locations/${selectedLocation.id}/details`);
                     if (response.ok) {
                         const locationDetails = await response.json();
-                        
+
                         const contentWithDescription = `
                             <div class="p-4 max-w-sm">
                                 <h3 class="font-semibold text-lg mb-2">${selectedLocation.titolo}</h3>
                                 <p class="text-sm text-gray-600 mb-2">${selectedLocation.indirizzo}</p>
                                 <p class="text-sm text-gray-700 mb-3">${locationDetails.descrizione || 'Nessuna descrizione disponibile.'}</p>
-                                
+
                                 ${locationDetails.orari_apertura ? `
                                 <div class="mb-2">
                                     <strong class="text-xs text-gray-800">🕐 Orari:</strong>
                                     <p class="text-xs text-gray-600">${locationDetails.orari_apertura}</p>
                                 </div>` : ''}
-                                
+
                                 ${locationDetails.prezzo_biglietto ? `
                                 <div class="mb-2">
                                     <strong class="text-xs text-gray-800">💰 Prezzi:</strong>
                                     <p class="text-xs text-gray-600">${locationDetails.prezzo_biglietto}</p>
                                 </div>` : ''}
-                                
+
                                 ${locationDetails.telefono ? `
                                 <div class="mb-2">
                                     <strong class="text-xs text-gray-800">📞 Telefono:</strong>
                                     <p class="text-xs text-gray-600">${locationDetails.telefono}</p>
                                 </div>` : ''}
-                                
+
                                 ${locationDetails.sito_web ? `
                                 <div class="mb-2">
                                     <strong class="text-xs text-gray-800">🌐 Sito web:</strong>
                                     <a href="${locationDetails.sito_web}" target="_blank" class="text-xs text-blue-600 hover:underline">${locationDetails.sito_web}</a>
                                 </div>` : ''}
-                                
+
                                 ${locationDetails.note_visitatori ? `
                                 <div class="mb-3">
                                     <strong class="text-xs text-gray-800">ℹ️ Note per i visitatori:</strong>
                                     <p class="text-xs text-gray-600">${locationDetails.note_visitatori}</p>
                                 </div>` : ''}
-                                
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" 
+
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                                       style="background-color: ${getMarkerColor(selectedLocation.stato)}20; color: ${getMarkerColor(selectedLocation.stato)};">
-                                    ${selectedLocation.stato === 'attivo' ? 'Attivo' : 
+                                    ${selectedLocation.stato === 'attivo' ? 'Attivo' :
                                       selectedLocation.stato === 'disattivo' ? 'Disattivo' : 'In Allarme'}
                                 </span>
                             </div>
@@ -338,16 +331,16 @@ export default function GoogleMap({
                     }
                 } catch (error) {
                     console.error('Error fetching location details:', error);
-                    
+
                     // Show error message
                     const errorContent = `
                         <div class="p-3">
                             <h3 class="font-semibold text-lg mb-2">${selectedLocation.titolo}</h3>
                             <p class="text-sm text-gray-600 mb-2">${selectedLocation.indirizzo}</p>
                             <p class="text-sm text-red-600 mb-3">Errore nel caricamento della descrizione.</p>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" 
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                                   style="background-color: ${getMarkerColor(selectedLocation.stato)}20; color: ${getMarkerColor(selectedLocation.stato)};">
-                                ${selectedLocation.stato === 'attivo' ? 'Attivo' : 
+                                ${selectedLocation.stato === 'attivo' ? 'Attivo' :
                                   selectedLocation.stato === 'disattivo' ? 'Disattivo' : 'In Allarme'}
                             </span>
                         </div>
