@@ -1,86 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
-* @see \App\Http\Controllers\LocationController::index
-* @see app/Http/Controllers/LocationController.php:11
-* @route '/'
-*/
-export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: index.url(options),
-    method: 'get',
-})
-
-index.definition = {
-    methods: ["get","head"],
-    url: '/',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\LocationController::index
-* @see app/Http/Controllers/LocationController.php:11
-* @route '/'
-*/
-index.url = (options?: RouteQueryOptions) => {
-    return index.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\LocationController::index
-* @see app/Http/Controllers/LocationController.php:11
-* @route '/'
-*/
-index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\LocationController::index
-* @see app/Http/Controllers/LocationController.php:11
-* @route '/'
-*/
-index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: index.url(options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\LocationController::index
-* @see app/Http/Controllers/LocationController.php:11
-* @route '/'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\LocationController::index
-* @see app/Http/Controllers/LocationController.php:11
-* @route '/'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\LocationController::index
-* @see app/Http/Controllers/LocationController.php:11
-* @route '/'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
-
-/**
 * @see \App\Http\Controllers\LocationController::search
 * @see app/Http/Controllers/LocationController.php:54
 * @route '/api/locations/search'
@@ -371,6 +290,87 @@ detailsForm.head = (args: { location: number | { id: number } } | [location: num
 
 details.form = detailsForm
 
-const LocationController = { index, search, show, details }
+/**
+* @see \App\Http\Controllers\LocationController::index
+* @see app/Http/Controllers/LocationController.php:11
+* @route '/'
+*/
+export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index.url(options),
+    method: 'get',
+})
+
+index.definition = {
+    methods: ["get","head"],
+    url: '/',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\LocationController::index
+* @see app/Http/Controllers/LocationController.php:11
+* @route '/'
+*/
+index.url = (options?: RouteQueryOptions) => {
+    return index.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\LocationController::index
+* @see app/Http/Controllers/LocationController.php:11
+* @route '/'
+*/
+index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\LocationController::index
+* @see app/Http/Controllers/LocationController.php:11
+* @route '/'
+*/
+index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: index.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\LocationController::index
+* @see app/Http/Controllers/LocationController.php:11
+* @route '/'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\LocationController::index
+* @see app/Http/Controllers/LocationController.php:11
+* @route '/'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\LocationController::index
+* @see app/Http/Controllers/LocationController.php:11
+* @route '/'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
+
+const LocationController = { search, show, details, index }
 
 export default LocationController
