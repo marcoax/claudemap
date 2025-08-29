@@ -3,23 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { MapPin, X, Eye } from 'lucide-react';
 import { useState } from 'react';
-
-interface Location {
-    id: number;
-    titolo: string;
-    indirizzo: string;
-    latitude: number;
-    longitude: number;
-    stato: 'attivo' | 'disattivo' | 'in_allarme';
-}
-
-interface DetailedLocation extends Location {
-    descrizione?: string;
-    stato_badge?: string;
-    stato_color?: string;
-    created_at?: string;
-    updated_at?: string;
-}
+import { type Location, type DetailedLocation } from '@/types/location';
 
 interface LocationsSidebarProps {
     locations: Location[];
@@ -100,16 +84,16 @@ export default function LocationsSidebar({
     return (
         <>
             {/* Mobile Overlay */}
-            <div 
+            <div
                 className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
                 onClick={onClose}
             />
-            
+
             {/* Sidebar */}
             <div className={`
-                fixed lg:relative top-0 right-0 h-full w-80 lg:w-96 
+                fixed lg:relative top-0 right-0 h-full w-80 lg:w-96
                 bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-700
-                shadow-xl lg:shadow-none z-50 
+                shadow-xl lg:shadow-none z-50
                 transform transition-transform duration-300 ease-in-out
                 ${isOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}
             `}>
@@ -147,8 +131,8 @@ export default function LocationsSidebar({
                                         <Card
                                             key={location.id}
                                             className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
-                                                isSelected 
-                                                    ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-950' 
+                                                isSelected
+                                                    ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-950'
                                                     : 'hover:bg-gray-50 dark:hover:bg-gray-800'
                                             }`}
                                             onClick={() => handleLocationClick(location)}
@@ -160,8 +144,8 @@ export default function LocationsSidebar({
                                                         <h3 className="font-semibold text-gray-900 dark:text-white text-sm leading-tight">
                                                             {location.titolo}
                                                         </h3>
-                                                        <Badge 
-                                                            variant="outline" 
+                                                        <Badge
+                                                            variant="outline"
                                                             className={`text-xs flex-shrink-0 ${getStatusColor(location.stato)}`}
                                                         >
                                                             {getStatusLabel(location.stato)}
@@ -188,7 +172,7 @@ export default function LocationsSidebar({
                                                         <div className="text-xs text-gray-400">
                                                             {Number(location.latitude).toFixed(4)}, {Number(location.longitude).toFixed(4)}
                                                         </div>
-                                                        
+
                                                         <Button
                                                             variant="ghost"
                                                             size="sm"

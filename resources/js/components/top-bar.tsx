@@ -10,15 +10,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Menu, RefreshCw, Search, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
-
-interface Location {
-    id: number;
-    titolo: string;
-    indirizzo: string;
-    latitude: number;
-    longitude: number;
-    stato: 'attivo' | 'disattivo' | 'in_allarme';
-}
+import { type Location } from '@/types/location';
 
 interface TopBarProps {
     locations: Location[];
@@ -62,7 +54,7 @@ export default function TopBar({
     useEffect(() => {
         if (localSearchQuery.trim().length > 0) {
             const filtered = locations
-                .filter(location => 
+                .filter(location =>
                     location.titolo.toLowerCase().includes(localSearchQuery.toLowerCase()) ||
                     location.indirizzo.toLowerCase().includes(localSearchQuery.toLowerCase())
                 )
@@ -117,7 +109,7 @@ export default function TopBar({
                         >
                             <Menu className="h-4 w-4" />
                         </Button>
-                        
+
                         <div className="hidden lg:block">
                             <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
                                 Dashboard Locations
@@ -170,7 +162,7 @@ export default function TopBar({
                                     </button>
                                 )}
                             </form>
-                            
+
                             {showSuggestions && (
                                 <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
                                     {suggestions.map((suggestion) => (

@@ -5,15 +5,7 @@ import TopBar from '@/components/top-bar';
 import LocationsSidebar from '@/components/locations-sidebar';
 import { dashboard, login, register } from '@/routes';
 import { type SharedData } from '@/types';
-
-interface Location {
-    id: number;
-    titolo: string;
-    indirizzo: string;
-    latitude: number;
-    longitude: number;
-    stato: 'attivo' | 'disattivo' | 'in_allarme';
-}
+import { type Location } from '@/types/location';
 
 interface WelcomeProps extends SharedData {
     locations: Location[];
@@ -68,11 +60,11 @@ export default function Welcome() {
         setSearchQuery(query);
         setSelectedLocation(null); // Clear selection when searching
         updateLocations(query, currentFilter);
-        
-        router.get('/', { 
-            search: query || undefined, 
-            stato: currentFilter !== 'tutti' ? currentFilter : undefined 
-        }, { 
+
+        router.get('/', {
+            search: query || undefined,
+            stato: currentFilter !== 'tutti' ? currentFilter : undefined
+        }, {
             preserveState: true,
             replace: true,
         });
@@ -82,11 +74,11 @@ export default function Welcome() {
         setCurrentFilter(filter);
         setSelectedLocation(null); // Clear selection when filtering
         updateLocations(searchQuery, filter);
-        
-        router.get('/', { 
-            search: searchQuery || undefined, 
-            stato: filter !== 'tutti' ? filter : undefined 
-        }, { 
+
+        router.get('/', {
+            search: searchQuery || undefined,
+            stato: filter !== 'tutti' ? filter : undefined
+        }, {
             preserveState: true,
             replace: true,
         });
@@ -96,23 +88,23 @@ export default function Welcome() {
         setSearchQuery('');
         setCurrentFilter('tutti');
         setSelectedLocation(null);
-        
+
         if (mapInstance) {
             const bounds = new google.maps.LatLngBounds();
             locations.forEach(location => {
-                bounds.extend({ 
-                    lat: Number(location.latitude), 
-                    lng: Number(location.longitude) 
+                bounds.extend({
+                    lat: Number(location.latitude),
+                    lng: Number(location.longitude)
                 });
             });
             mapInstance.fitBounds(bounds);
         }
 
-        router.get('/', {}, { 
+        router.get('/', {}, {
             preserveState: true,
             replace: true,
         });
-        
+
         updateLocations('', 'tutti');
     }, [mapInstance, locations, updateLocations]);
 
@@ -184,7 +176,7 @@ export default function Welcome() {
                         </div>
                     </div>
                 </header>
-                
+
                 {/* Top Bar */}
                 <TopBar
                     locations={locations}
@@ -213,7 +205,7 @@ export default function Welcome() {
                                 </div>
                             </div>
                         )}
-                        
+
                         <GoogleMap
                             locations={locations}
                             selectedLocation={selectedLocation}

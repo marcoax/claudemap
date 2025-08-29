@@ -10,14 +10,24 @@ class LocationController extends Controller
 {
     public function index(Request $request)
     {
+        // Validate incoming filters to avoid unexpected queries
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:255'],
+            'stato' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                if ($value !== null && $value !== 'tutti' && !in_array($value, Location::STATI, true)) {
+                    $fail('Valore stato non valido.');
+                }
+            }],
+        ]);
+
         $query = Location::query();
 
-        if ($request->filled('search')) {
-            $query->search($request->search);
+        if (!empty($validated['search'])) {
+            $query->search($validated['search']);
         }
 
-        if ($request->filled('stato') && $request->stato !== 'tutti') {
-            $query->byStato($request->stato);
+        if (!empty($validated['stato']) && $validated['stato'] !== 'tutti') {
+            $query->byStato($validated['stato']);
         }
 
         $locations = $query->select([
@@ -45,27 +55,40 @@ class LocationController extends Controller
             'total_count' => $totalCount,
             'filtered_count' => $filteredCount,
             'filters' => [
-                'search' => $request->search,
-                'stato' => $request->stato,
+                'search' => $validated['search'] ?? null,
+                'stato' => $validated['stato'] ?? null,
             ],
         ]);
     }
 
     public function search(Request $request)
     {
+        // Validate search params (API)
+        $validated = $request->validate([
+            'q' => ['nullable', 'string', 'max:255'],
+            'stato' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                if ($value !== null && $value !== 'tutti' && !in_array($value, Location::STATI, true)) {
+                    $fail('Valore stato non valido.');
+                }
+            }],
+            'lat' => ['nullable', 'numeric'],
+            'lng' => ['nullable', 'numeric'],
+            'radius' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
         $query = Location::query();
 
-        if ($request->filled('q')) {
-            $query->search($request->q);
+        if (!empty($validated['q'])) {
+            $query->search($validated['q']);
         }
 
-        if ($request->filled('stato') && $request->stato !== 'tutti') {
-            $query->byStato($request->stato);
+        if (!empty($validated['stato']) && $validated['stato'] !== 'tutti') {
+            $query->byStato($validated['stato']);
         }
 
-        if ($request->filled('lat') && $request->filled('lng')) {
-            $radiusKm = $request->input('radius', 10);
-            $query->nearby($request->lat, $request->lng, $radiusKm);
+        if (isset($validated['lat'], $validated['lng'])) {
+            $radiusKm = isset($validated['radius']) ? (float)$validated['radius'] : 10.0;
+            $query->nearby((float)$validated['lat'], (float)$validated['lng'], $radiusKm);
         }
 
         $locations = $query->select([

@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
+    /**
+     * Allowed state values for a Location.
+     */
+    public const STATI = ['attivo', 'disattivo', 'in_allarme'];
+
     protected $fillable = [
         'titolo',
         'descrizione',
